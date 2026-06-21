@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Paper Perfect — HSC Practice Exams</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --ink:#1C1B22;--sand:#DEC9A8;--greige:#A89F93;--taupe:#7A6459;--espresso:#4A3728;
+  --sand-lt:#F2E8D9;--sand-xlt:#FAF6F0;--text-body:#6b5e52;--text-muted:#8a7f75;
+  --gold:#c9a96e;--rule:rgba(168,159,147,0.22);
+  --hero-title:#F7EDD8;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--sand-xlt);color:var(--text-body);overflow-x:hidden;cursor:none;}
+.cursor{width:8px;height:8px;border-radius:50%;background:var(--taupe);position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.13s ease,background 0.2s;}
+.cursor-ring{width:32px;height:32px;border-radius:50%;border:1px solid var(--taupe);position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:0.4;transition:opacity 0.2s,transform 0.2s;}
+body::before{content:'';position:fixed;inset:0;z-index:9990;pointer-events:none;opacity:0.45;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;padding:0 56px;height:64px;background:rgba(250,246,240,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--rule);transition:background 0.4s;}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--espresso);}
+.nav-logo em{font-style:italic;color:var(--taupe);font-weight:300;}
+.nav-links{display:flex;gap:40px;list-style:none;}
+.nav-links a{font-size:11px;font-weight:400;letter-spacing:0.1em;color:var(--text-muted);text-decoration:none;text-transform:uppercase;transition:color 0.2s;}
+.nav-links a:hover{color:var(--espresso);}
+.nav-cta{background:var(--espresso);color:var(--sand-lt);border:none;padding:9px 22px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:none;transition:background 0.25s,transform 0.15s;}
+.nav-cta:hover{background:var(--taupe);transform:translateY(-1px);}
+@media(max-width:768px){.nav-links{display:none;}nav{padding:0 24px;}}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:130px 56px 90px;position:relative;overflow:hidden;background:var(--ink);}
+#hero::after{content:'';position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(-55deg,transparent,transparent 80px,rgba(222,201,168,0.018) 80px,rgba(222,201,168,0.018) 81px);animation:rulesDrift 30s linear infinite;}
+@keyframes rulesDrift{0%{background-position:0 0;}100%{background-position:200px 200px;}}
+.orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(90px);}
+.orb-1{width:640px;height:640px;background:rgba(74,55,40,0.44);top:-160px;right:-120px;animation:drift 10s ease-in-out infinite;}
+.orb-2{width:380px;height:380px;background:rgba(122,100,89,0.2);bottom:-60px;left:160px;animation:drift 14s ease-in-out infinite reverse;}
+.orb-3{width:240px;height:240px;background:rgba(247,237,216,0.05);top:40%;left:38%;animation:drift 18s ease-in-out infinite 3s;}
+@keyframes drift{0%,100%{transform:translate(0,0);}50%{transform:translate(28px,18px);}}
+.hero-pill{display:inline-flex;align-items:center;gap:12px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--sand);background:rgba(222,201,168,0.08);border:1px solid rgba(222,201,168,0.2);padding:8px 20px;margin-bottom:40px;opacity:0;animation:slideUp 0.9s 0.15s cubic-bezier(0.22,1,0.36,1) forwards;}
+.pill-rule{width:20px;height:1px;background:var(--hero-title);opacity:0.6;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(58px,7.5vw,108px);font-weight:300;line-height:1.02;color:#ffffff;max-width:860px;margin-bottom:32px;opacity:0;animation:slideUp 1s 0.32s cubic-bezier(0.22,1,0.36,1) forwards;letter-spacing:-0.01em;}
+.hero h1 em{color:#ffffff;font-style:italic;font-weight:300;}
+.hero h1 strong{display:block;color:#ffffff;font-weight:300;opacity:1;}
+.hero-sub{font-size:16px;font-weight:300;line-height:1.8;color:rgba(255,255,255,0.55);max-width:500px;margin-bottom:48px;opacity:0;animation:slideUp 1s 0.46s cubic-bezier(0.22,1,0.36,1) forwards;}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:80px;opacity:0;animation:slideUp 1s 0.58s cubic-bezier(0.22,1,0.36,1) forwards;}
+.btn-primary{background:var(--hero-title);color:var(--espresso);border:none;padding:14px 34px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:none;transition:background 0.25s,transform 0.15s,box-shadow 0.25s;}
+.btn-primary:hover{background:#fff3da;transform:translateY(-2px);box-shadow:0 10px 30px rgba(247,237,216,0.15);}
+.btn-ghost{background:transparent;color:rgba(255,255,255,0.82);border:1px solid rgba(255,255,255,0.28);padding:14px 34px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:400;letter-spacing:0.08em;text-transform:uppercase;cursor:none;transition:border-color 0.25s,color 0.25s,transform 0.15s;}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.6);color:#fff;transform:translateY(-2px);}
+.hero-rule{width:100%;height:1px;background:rgba(255,255,255,0.08);margin-bottom:40px;opacity:0;animation:slideUp 1s 0.68s cubic-bezier(0.22,1,0.36,1) forwards;}
+.hero-stats{display:flex;gap:64px;flex-wrap:wrap;opacity:0;animation:slideUp 1s 0.72s cubic-bezier(0.22,1,0.36,1) forwards;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--hero-title);line-height:1;}
+.stat-lbl{font-size:10px;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-top:6px;}
+@media(max-width:768px){#hero{padding:110px 24px 70px;}.hero-stats{gap:32px;}}
+
+/* TICKER */
+.ticker-wrap{overflow:hidden;background:var(--espresso);padding:13px 0;border-top:1px solid rgba(222,201,168,0.1);}
+.ticker-inner{display:flex;animation:tick 32s linear infinite;white-space:nowrap;}
+.ticker-item{display:inline-flex;align-items:center;gap:20px;padding:0 48px;font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(222,201,168,0.7);}
+.ticker-mark{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--hero-title);opacity:0.5;}
+@keyframes tick{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+/* TRUST BAR */
+#trust{display:flex;align-items:center;gap:44px;flex-wrap:wrap;padding:20px 56px;background:var(--sand-lt);border-bottom:1px solid var(--rule);}
+.trust-item{display:flex;align-items:center;gap:9px;font-size:11px;font-weight:400;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);}
+.trust-icon{width:14px;height:14px;color:var(--taupe);flex-shrink:0;}
+
+/* REVIEWS */
+#reviews{background:var(--ink);padding:100px 0 108px;overflow:hidden;}
+#reviews .eyebrow{padding:0 56px;color:rgba(222,201,168,0.5);}
+#reviews .eyebrow-line{background:rgba(222,201,168,0.3);}
+#reviews .sec-title{padding:0 56px;color:#FFFFFF;}
+#reviews .sec-title em{color:var(--hero-title);font-style:italic;}
+#reviews .sec-sub{padding:0 56px;color:rgba(255,255,255,0.42);margin-bottom:52px;}
+.reviews-track{overflow:hidden;-webkit-mask:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);mask:linear-gradient(90deg,transparent 0%,#000 8%,#000 92%,transparent 100%);}
+.reviews-row{display:flex;gap:18px;width:max-content;padding-bottom:18px;}
+.reviews-row-1{animation:scrollL 52s linear infinite;}
+.reviews-row-2{animation:scrollR 58s linear infinite;margin-top:18px;}
+.reviews-track:hover .reviews-row{animation-play-state:paused;}
+@keyframes scrollL{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+@keyframes scrollR{0%{transform:translateX(-50%);}100%{transform:translateX(0);}}
+.review-card{background:rgba(255,255,255,0.04);border:1px solid rgba(222,201,168,0.13);padding:30px 26px;width:340px;flex-shrink:0;position:relative;overflow:hidden;transition:background 0.35s,border-color 0.35s,transform 0.35s;cursor:none;}
+.review-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--hero-title),transparent);transform:scaleX(0);transform-origin:center;transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);}
+.review-card:hover{background:rgba(255,255,255,0.07);border-color:rgba(247,237,216,0.22);transform:translateY(-4px);}
+.review-card:hover::after{transform:scaleX(1);}
+.review-quote-mark{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:300;line-height:0.7;color:var(--hero-title);opacity:0.25;display:block;margin-bottom:14px;}
+.review-stars{display:flex;gap:3px;margin-bottom:14px;}
+.review-stars svg{width:11px;height:11px;color:var(--hero-title);}
+.review-text{font-size:13.5px;font-weight:300;font-style:italic;color:rgba(255,255,255,0.75);line-height:1.85;margin-bottom:20px;}
+.review-divider{width:20px;height:1px;background:rgba(222,201,168,0.3);margin-bottom:14px;}
+.review-author{font-size:13px;font-weight:500;color:rgba(255,255,255,0.88);}
+.review-role{font-size:11px;font-weight:300;color:rgba(255,255,255,0.38);margin-top:3px;letter-spacing:0.04em;}
+
+/* SHARED */
+section{padding:108px 56px;}
+.eyebrow{display:flex;align-items:center;gap:14px;font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--taupe);margin-bottom:20px;}
+.eyebrow-line{width:28px;height:1px;background:var(--taupe);opacity:0.6;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,4.5vw,62px);font-weight:300;line-height:1.08;color:var(--espresso);margin-bottom:20px;letter-spacing:-0.01em;}
+.sec-title em{font-style:italic;color:var(--taupe);}
+.sec-sub{font-size:15px;font-weight:300;line-height:1.85;color:var(--text-muted);max-width:520px;margin-bottom:60px;}
+@media(max-width:768px){section{padding:72px 24px;}}
+
+/* SUBJECTS */
+#subjects{background:var(--sand-xlt);}
+.subjects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);}
+.subject-card{background:var(--sand-xlt);padding:36px 28px;cursor:none;transition:background 0.3s;position:relative;overflow:hidden;}
+.subject-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--hero-title));transform:scaleX(0);transform-origin:left;transition:transform 0.4s cubic-bezier(0.22,1,0.36,1);}
+.subject-card:hover{background:#fff;}
+.subject-card:hover::before{transform:scaleX(1);}
+.subject-card-icon{width:22px;height:22px;color:var(--greige);margin-bottom:18px;display:block;transition:color 0.3s;}
+.subject-card:hover .subject-card-icon{color:var(--taupe);}
+.subject-abbr{font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;color:var(--greige);margin-bottom:6px;display:block;}
+.subject-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--espresso);line-height:1.2;margin-bottom:8px;}
+.subject-meta{font-size:12px;font-weight:300;color:var(--text-muted);margin-bottom:20px;line-height:1.5;}
+.subject-price{font-size:12px;font-weight:500;letter-spacing:0.06em;color:var(--taupe);}
+.subject-card .get-btn{display:inline-block;margin-top:14px;font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--espresso);border:1px solid var(--espresso);padding:8px 18px;background:transparent;cursor:none;transition:background 0.2s,color 0.2s;}
+.subject-card:hover .get-btn{background:var(--espresso);color:var(--sand-lt);}
+
+/* HOW */
+#how{background:var(--ink);}
+#how .sec-title{color:#FFFFFF;}
+#how .sec-title em{color:var(--hero-title);}
+#how .eyebrow{color:rgba(222,201,168,0.5);}
+#how .eyebrow-line{background:rgba(222,201,168,0.3);}
+#how .sec-sub{color:rgba(255,255,255,0.4);}
+.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0;border-top:1px solid rgba(255,255,255,0.07);}
+.how-step{padding:48px 36px;border-right:1px solid rgba(255,255,255,0.06);transition:background 0.3s;}
+.how-step:hover{background:rgba(255,255,255,0.03);}
+.how-step:last-child{border-right:none;}
+.how-step-icon{width:32px;height:32px;color:var(--hero-title);opacity:0.7;margin-bottom:24px;display:block;}
+.how-num{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;line-height:1;color:rgba(247,237,216,0.07);margin-bottom:16px;display:block;}
+.how-title{font-size:15px;font-weight:400;color:rgba(255,255,255,0.88);margin-bottom:12px;}
+.how-desc{font-size:13.5px;font-weight:300;color:rgba(255,255,255,0.5);line-height:1.85;}
+
+/* PRICING — now redirects to contact */
+#pricing{background:var(--sand-lt);}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(236px,1fr));gap:20px;}
+.pricing-card{background:var(--sand-xlt);border:1px solid var(--rule);padding:36px 28px;position:relative;transition:transform 0.3s,box-shadow 0.3s,background 0.3s;}
+.pricing-card:hover{transform:translateY(-6px);box-shadow:0 24px 56px rgba(74,55,40,0.12);background:#fff;}
+.pricing-card.featured{background:var(--espresso);border-color:var(--espresso);}
+.pricing-card.featured:hover{background:#3d2d1e;box-shadow:0 24px 56px rgba(74,55,40,0.3);}
+.pricing-card.featured .pricing-name{color:var(--sand);}
+.pricing-card.featured .pricing-price{color:var(--hero-title);}
+.pricing-card.featured .pricing-period,.pricing-card.featured .pricing-desc,.pricing-card.featured .feat-item{color:rgba(255,255,255,0.5);}
+.pricing-card.featured .feat-icon{color:rgba(247,237,216,0.5);}
+.pricing-card.featured .p-btn{border-color:var(--hero-title);color:var(--hero-title);}
+.pricing-card.featured .p-btn:hover{background:var(--hero-title);color:var(--espresso);}
+.pricing-card.featured .pricing-icon{color:var(--hero-title);opacity:0.5;}
+.pop-label{position:absolute;top:-1px;right:24px;font-size:9px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;background:var(--hero-title);color:var(--espresso);padding:5px 14px;}
+.pricing-icon{width:24px;height:24px;color:var(--taupe);opacity:0.6;margin-bottom:18px;display:block;}
+.pricing-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--espresso);margin-bottom:4px;}
+.pricing-price{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:300;color:var(--espresso);line-height:1;margin:12px 0 2px;}
+.pricing-period{font-size:12px;font-weight:300;color:var(--text-muted);margin-bottom:14px;}
+.pricing-desc{font-size:13.5px;font-weight:300;color:var(--text-muted);line-height:1.75;margin-bottom:22px;}
+.feat-list{list-style:none;margin-bottom:28px;}
+.feat-item{font-size:13px;font-weight:300;color:var(--text-muted);padding:5px 0;display:flex;align-items:flex-start;gap:10px;line-height:1.5;}
+.feat-icon{width:13px;height:13px;flex-shrink:0;margin-top:2px;color:var(--taupe);opacity:0.7;}
+.p-btn{width:100%;padding:12px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;background:transparent;color:var(--espresso);border:1px solid var(--espresso);cursor:none;transition:background 0.25s,color 0.25s,transform 0.15s;}
+.p-btn:hover{background:var(--espresso);color:var(--sand-lt);transform:translateY(-1px);}
+
+/* INTERACTIVE SAMPLE */
+#sample{background:var(--ink);}
+#sample .sec-title{color:#FFFFFF;}
+#sample .sec-title em{color:var(--hero-title);}
+#sample .eyebrow{color:rgba(222,201,168,0.45);}
+#sample .eyebrow-line{background:rgba(222,201,168,0.25);}
+#sample .sec-sub{color:rgba(255,255,255,0.42);}
+.sample-tabs{display:flex;border:1px solid rgba(222,201,168,0.15);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.sample-tabs::-webkit-scrollbar{display:none;}
+.sample-tab{padding:13px 26px;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.38);background:transparent;border:none;cursor:none;transition:color 0.2s,background 0.2s;white-space:nowrap;border-right:1px solid rgba(222,201,168,0.1);}
+.sample-tab:last-child{border-right:none;}
+.sample-tab.active{color:var(--hero-title);background:rgba(247,237,216,0.05);}
+.sample-tab:hover:not(.active){color:rgba(255,255,255,0.65);background:rgba(255,255,255,0.03);}
+.sample-panel{display:none;background:rgba(255,255,255,0.03);border:1px solid rgba(222,201,168,0.12);border-top:none;padding:48px;}
+.sample-panel.active{display:block;animation:fadeIn 0.4s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.sample-head{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:28px;margin-bottom:32px;border-bottom:1px solid rgba(255,255,255,0.07);flex-wrap:wrap;gap:14px;}
+.sample-subject-name{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:#fff;}
+.sample-meta{font-size:11px;font-weight:300;color:rgba(255,255,255,0.35);margin-top:5px;letter-spacing:0.06em;}
+.marks-tag{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--hero-title);border:1px solid rgba(247,237,216,0.25);padding:6px 16px;white-space:nowrap;}
+.sample-q{font-size:15px;font-weight:300;color:rgba(255,255,255,0.92);line-height:1.9;margin-bottom:28px;}
+.sample-q strong{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;color:var(--hero-title);}
+
+/* Multi-choice question */
+.mc-options{display:flex;flex-direction:column;gap:10px;margin-bottom:28px;}
+.mc-option{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;background:rgba(255,255,255,0.03);border:1px solid rgba(222,201,168,0.1);cursor:none;transition:background 0.2s,border-color 0.2s;font-size:14px;font-weight:300;color:rgba(255,255,255,0.72);line-height:1.6;text-align:left;width:100%;font-family:'DM Sans',sans-serif;}
+.mc-option:hover:not(.selected):not(.correct):not(.wrong){background:rgba(255,255,255,0.06);border-color:rgba(222,201,168,0.2);}
+.mc-option.correct{background:rgba(100,200,120,0.1);border-color:rgba(100,200,120,0.35);color:rgba(255,255,255,0.9);}
+.mc-option.wrong{background:rgba(220,80,80,0.08);border-color:rgba(220,80,80,0.25);color:rgba(255,255,255,0.55);}
+.mc-label{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:500;color:var(--hero-title);flex-shrink:0;min-width:20px;}
+.mc-option.correct .mc-label{color:#6dc88a;}
+.mc-option.wrong .mc-label{color:rgba(220,80,80,0.6);}
+
+/* Short-answer reveal */
+.sample-answer-box{background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.06);padding:28px;margin-bottom:18px;transition:border-color 0.4s;}
+.sample-answer-box.revealed{border-color:rgba(247,237,216,0.35);}
+.sample-answer-lbl{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+.sample-answer-text{font-size:14.5px;font-weight:300;color:#F7EDD8;line-height:1.95;}
+.sample-answer-text p{margin-bottom:10px;}
+.sample-answer-text p:last-child{margin-bottom:0;}
+.sample-blurred{filter:blur(7px);user-select:none;transition:filter 0.55s cubic-bezier(0.22,1,0.36,1);}
+.sample-blurred p, .sample-blurred strong, .sample-blurred em{color:#F7EDD8 !important;}
+.feedback-box{padding:16px 20px;margin-top:16px;border-left:3px solid;font-size:13.5px;font-weight:300;line-height:1.75;display:none;}
+.feedback-box.show{display:block;animation:fadeIn 0.3s ease;}
+.feedback-box.correct-fb{border-color:#6dc88a;background:rgba(100,200,120,0.06);color:rgba(255,255,255,0.85);}
+.feedback-box.wrong-fb{border-color:rgba(220,80,80,0.4);background:rgba(220,80,80,0.05);color:rgba(255,255,255,0.85);}
+/* Solution text styling - clear cream colour */
+.sample-blurred p, .sample-blurred p strong, .sample-blurred p em{color:#e8d8b8 !important;}
+#blur-maths p, #blur-maths p strong, #blur-maths p em,
+#blur-english p, #blur-english p strong, #blur-english p em,
+#blur-physics p, #blur-physics p strong, #blur-physics p em{color:#e8d8b8 !important;}
+.sample-answer-box p{color:#e8d8b8 !important;}
+.sample-answer-box p strong{color:#F7EDD8 !important;}
+.sample-answer-box p em{color:rgba(247,237,216,0.75) !important;}
+.sample-reveal-row{display:flex;align-items:center;gap:18px;margin-top:18px;flex-wrap:wrap;}
+.btn-reveal{background:transparent;color:var(--hero-title);border:1px solid rgba(247,237,216,0.3);padding:10px 24px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;cursor:none;transition:background 0.2s,color 0.2s,transform 0.15s;}
+.btn-reveal:hover{background:rgba(247,237,216,0.08);transform:translateY(-1px);}
+.sample-lock-note{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:300;color:rgba(255,255,255,0.3);letter-spacing:0.04em;}
+.sample-lock-note svg{width:14px;height:14px;color:rgba(255,255,255,0.2);flex-shrink:0;}
+@media(max-width:768px){.sample-panel{padding:28px 20px;}}
+
+/* ABOUT */
+#about{background:var(--sand-lt);}
+.about-grid{display:grid;grid-template-columns:1fr;gap:72px;align-items:start;max-width:720px;}
+@media(max-width:760px){.about-grid{grid-template-columns:1fr;gap:40px;}}
+.founder-card{background:var(--sand-xlt);border:1px solid var(--rule);padding:28px;display:flex;align-items:flex-start;gap:20px;margin-bottom:16px;transition:box-shadow 0.25s,transform 0.25s;}
+.founder-card:hover{box-shadow:0 8px 28px rgba(74,55,40,0.08);transform:translateY(-2px);}
+.founder-avatar{width:44px;height:44px;border:1px solid var(--sand);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:500;color:var(--taupe);background:var(--sand-lt);}
+.founder-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:500;color:var(--espresso);margin-bottom:2px;}
+.founder-role{font-size:10px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--greige);margin-bottom:8px;}
+.founder-bio{font-size:13.5px;font-weight:300;color:var(--text-muted);line-height:1.8;}
+.about-block{margin-bottom:32px;}
+.about-block h3{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:500;color:var(--espresso);margin-bottom:10px;}
+.about-block p{font-size:14px;font-weight:300;color:var(--text-muted);line-height:1.9;}
+
+/* BLOG */
+#blog{background:var(--sand-xlt);}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;}
+.blog-card{background:var(--sand-lt);border:1px solid var(--rule);padding:32px;cursor:none;transition:transform 0.3s,box-shadow 0.3s,background 0.3s;position:relative;overflow:hidden;}
+.blog-card::after{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:linear-gradient(to bottom,var(--gold),var(--hero-title));transition:height 0.4s cubic-bezier(0.22,1,0.36,1);}
+.blog-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(74,55,40,0.08);background:#fff;}
+.blog-card:hover::after{height:100%;}
+.blog-icon{width:22px;height:22px;color:var(--greige);margin-bottom:18px;display:block;transition:color 0.3s;}
+.blog-card:hover .blog-icon{color:var(--taupe);}
+.blog-tag{display:inline-block;font-size:9px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--taupe);border-bottom:1px solid var(--sand);padding-bottom:3px;margin-bottom:14px;}
+.blog-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--espresso);line-height:1.4;margin-bottom:12px;}
+.blog-meta{font-size:11px;font-weight:300;color:var(--greige);letter-spacing:0.04em;margin-bottom:16px;}
+.blog-expand-btn{font-size:10px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--taupe);background:none;border:none;cursor:none;padding:0;transition:color 0.2s;}
+.blog-expand-btn:hover{color:var(--espresso);}
+.blog-expanded{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--rule);}
+.blog-expanded p{font-size:13.5px;font-weight:300;color:var(--text-muted);line-height:1.85;margin-bottom:12px;}
+.blog-expanded p:last-child{margin-bottom:0;}
+.blog-card.open .blog-expanded{display:block;}
+
+/* CONTACT / REACH OUT */
+#contact{background:var(--ink);padding:108px 56px;}
+#contact .sec-title{color:#FFFFFF;}
+#contact .sec-title em{color:var(--hero-title);}
+#contact .eyebrow{color:rgba(222,201,168,0.5);}
+#contact .eyebrow-line{background:rgba(222,201,168,0.3);}
+#contact .sec-sub{color:rgba(255,255,255,0.45);max-width:480px;}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
+.contact-card{background:rgba(255,255,255,0.04);border:1px solid rgba(222,201,168,0.12);padding:40px 32px;display:flex;flex-direction:column;gap:18px;text-decoration:none;transition:transform 0.3s,background 0.3s,border-color 0.3s;cursor:none;position:relative;overflow:hidden;}
+.contact-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;transform:scaleX(0);transform-origin:left;transition:transform 0.4s cubic-bezier(0.22,1,0.36,1);}
+.contact-card:hover{transform:translateY(-5px);background:rgba(255,255,255,0.07);}
+.contact-card:hover::after{transform:scaleX(1);}
+.contact-card.whatsapp::after{background:linear-gradient(90deg,#25d366,#128c7e);}
+.contact-card.whatsapp:hover{border-color:rgba(37,211,102,0.3);}
+.contact-card.instagram::after{background:linear-gradient(90deg,#f09433,#dc2743,#bc1888);}
+.contact-card.instagram:hover{border-color:rgba(225,48,108,0.3);}
+.contact-card.email::after{background:linear-gradient(90deg,var(--gold),var(--hero-title));}
+.contact-card.email:hover{border-color:rgba(222,201,168,0.35);}
+.contact-icon-wrap{width:52px;height:52px;display:flex;align-items:center;justify-content:center;border-radius:50%;}
+.contact-icon-wrap svg{width:24px;height:24px;}
+.contact-card.whatsapp .contact-icon-wrap{background:rgba(37,211,102,0.1);}
+.contact-card.whatsapp .contact-icon-wrap svg{color:#25d366;}
+.contact-card.instagram .contact-icon-wrap{background:rgba(225,48,108,0.1);}
+.contact-card.instagram .contact-icon-wrap svg{color:#e1306c;}
+.contact-card.email .contact-icon-wrap{background:rgba(201,169,110,0.1);}
+.contact-card.email .contact-icon-wrap svg{color:var(--gold);}
+.contact-body{}
+.contact-platform{font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:4px;}
+.contact-handle{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;color:rgba(255,255,255,0.9);}
+.contact-cta-text{font-size:13px;font-weight:300;color:rgba(255,255,255,0.38);line-height:1.6;margin-top:6px;}
+.contact-arrow{font-size:22px;color:rgba(255,255,255,0.15);transition:color 0.2s,transform 0.2s;line-height:1;margin-top:auto;}
+.contact-card:hover .contact-arrow{color:rgba(255,255,255,0.5);transform:translateX(5px);}
+.contact-note{margin-top:40px;font-size:13px;font-weight:300;color:rgba(255,255,255,0.28);letter-spacing:0.03em;}
+@media(max-width:768px){#contact{padding:72px 24px;}}
+
+/* CTA BANNER */
+#cta-banner{background:var(--espresso);padding:96px 56px;text-align:center;position:relative;overflow:hidden;}
+#cta-banner::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(-55deg,transparent,transparent 60px,rgba(247,237,216,0.022) 60px,rgba(247,237,216,0.022) 61px);}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,5vw,72px);font-weight:300;line-height:1.12;color:var(--hero-title);margin-bottom:18px;}
+.cta-title em{font-style:italic;color:rgba(247,237,216,0.4);}
+.cta-sub{font-size:15px;font-weight:300;color:rgba(255,255,255,0.45);margin-bottom:44px;}
+
+/* FOOTER */
+footer{background:var(--ink);padding:72px 56px 36px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px;}
+@media(max-width:760px){.footer-grid{grid-template-columns:1fr 1fr;}footer{padding:48px 24px 24px;}}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:400;color:var(--hero-title);margin-bottom:14px;}
+.footer-logo em{font-style:italic;font-weight:300;color:rgba(247,237,216,0.4);}
+.footer-tagline{font-size:13px;font-weight:300;color:rgba(255,255,255,0.32);line-height:1.85;margin-bottom:24px;}
+.footer-col h4{font-size:9px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:20px;}
+.footer-col a{display:block;font-size:13px;font-weight:300;color:rgba(255,255,255,0.48);text-decoration:none;margin-bottom:12px;transition:color 0.2s;}
+.footer-col a:hover{color:var(--hero-title);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.07);padding-top:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.footer-bottom span{font-size:11px;font-weight:300;color:rgba(255,255,255,0.2);letter-spacing:0.03em;}
+
+/* ANIMATIONS */
+@keyframes slideUp{from{opacity:0;transform:translateY(32px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.85s cubic-bezier(0.22,1,0.36,1),transform 0.85s cubic-bezier(0.22,1,0.36,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* FLOATING CONTACT WIDGET */
+.float-contact-btn{position:fixed;bottom:28px;right:28px;z-index:8888;width:54px;height:54px;border-radius:50%;background:var(--espresso);border:none;cursor:none;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(74,55,40,0.45);transition:transform 0.25s cubic-bezier(0.22,1,0.36,1),box-shadow 0.25s;}
+.float-contact-btn:hover{transform:scale(1.1);box-shadow:0 12px 40px rgba(74,55,40,0.6);}
+.float-contact-btn svg{width:22px;height:22px;color:var(--hero-title);transition:transform 0.3s;}
+.float-contact-btn.open svg{transform:rotate(45deg);}
+.float-contact-panel{position:fixed;bottom:94px;right:28px;z-index:8887;width:300px;background:var(--ink);border:1px solid rgba(222,201,168,0.2);box-shadow:0 20px 60px rgba(0,0,0,0.5);padding:28px 24px;opacity:0;pointer-events:none;transform:translateY(12px) scale(0.97);transform-origin:bottom right;transition:opacity 0.28s cubic-bezier(0.22,1,0.36,1),transform 0.28s cubic-bezier(0.22,1,0.36,1);}
+.float-contact-panel.open{opacity:1;pointer-events:all;transform:translateY(0) scale(1);}
+.float-panel-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--hero-title);margin-bottom:6px;}
+.float-panel-sub{font-size:11px;font-weight:300;color:rgba(255,255,255,0.38);letter-spacing:0.04em;margin-bottom:20px;}
+.float-panel-links{display:flex;flex-direction:column;gap:10px;}
+.float-panel-link{display:flex;align-items:center;gap:12px;padding:11px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(222,201,168,0.1);text-decoration:none;transition:background 0.2s,border-color 0.2s;cursor:none;}
+.float-panel-link:hover{background:rgba(255,255,255,0.08);}
+.float-panel-link.wa:hover{border-color:rgba(37,211,102,0.35);}
+.float-panel-link.ig:hover{border-color:rgba(225,48,108,0.35);}
+.float-panel-link.em:hover{border-color:rgba(201,169,110,0.35);}
+.float-link-icon{width:18px;height:18px;flex-shrink:0;}
+.float-panel-link.wa .float-link-icon{color:#25d366;}
+.float-panel-link.ig .float-link-icon{color:#e1306c;}
+.float-panel-link.em .float-link-icon{color:var(--gold);}
+.float-link-text{font-size:13px;font-weight:300;color:rgba(255,255,255,0.82);letter-spacing:0.02em;}
+</style>
+</head>
+<body>
+<div class="cursor" id="cur"></div>
+<div class="cursor-ring" id="ring"></div>
+
+<nav id="nav">
+  <div class="nav-logo">Paper<em>Perfect</em></div>
+  <ul class="nav-links">
+    <li><a href="#subjects">Subjects</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#sample">Try a question</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#blog">Study Hub</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get started</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div>
+  <div class="hero-pill"><span class="pill-rule"></span>NSW HSC practice papers &amp; Band 6 solutions<span class="pill-rule"></span></div>
+  <h1>Score higher.<br><em>Study smarter.</em> Own your HSC.</h1>
+  <p class="hero-sub">Practice exams written to NESA standards. Every paper includes marking guidelines and Band 6 worked solutions so you know exactly what the marker wants.</p>
+  <div class="hero-actions">
+    <button class="btn-primary" onclick="document.getElementById('subjects').scrollIntoView({behavior:'smooth'})">Browse subjects</button>
+    <button class="btn-ghost" onclick="document.getElementById('sample').scrollIntoView({behavior:'smooth'})">Try a sample question</button>
+  </div>
+  <div class="hero-rule"></div>
+  <div class="hero-stats">
+    <div><div class="stat-num">12+</div><div class="stat-lbl">HSC subjects covered</div></div>
+    <div><div class="stat-num">Band 6</div><div class="stat-lbl">Targeted outcomes</div></div>
+    <div><div class="stat-num">NESA</div><div class="stat-lbl">Syllabus aligned</div></div>
+    <div><div class="stat-num">100%</div><div class="stat-lbl">Original content</div></div>
+  </div>
+</section>
+
+<div class="ticker-wrap"><div class="ticker-inner">
+  <span class="ticker-item">NESA syllabus aligned<span class="ticker-mark">&nbsp;&#x2767;&nbsp;</span></span>
+  <span class="ticker-item">Same-day PDF delivery<span class="ticker-mark">&nbsp;&#x2767;&nbsp;</span></span>
+  <span class="ticker-item">Full marking guidelines<span class="ticker-mark">&nbsp;&#x2767;&nbsp;</span></span>
+  <span class="ticker-item">Band 6 model answers<span class="ticker-mark">&nbsp;&#x2767;&nbsp;</span></span>
+  <span class="ticker-item">Written by top HSC graduates<span class="ticker-mark">&nbsp;&#x2767;&nbsp;</span></span>
+  <span class="ticker-item">Trusted across NSW<span class="ticker-mark">&nbsp;&#x2767;&nbsp;</span></span>
+  <span class="ticker-item">Harder than most school trials<span class="ticker-mark">&nbsp;&#x2767;&nbsp;</span></span>
+  <span class="ticker-item">NESA syllabus aligned<span class="ticker-mark">&nbsp;&#x2767;&nbsp;</span></span>
+  <span class="ticker-item">Same-day PDF delivery<span class="ticker-mark">&nbsp;&#x2767;&nbsp;</span></span>
+  <span class="ticker-item">Full marking guidelines<span class="ticker-mark">&nbsp;&#x2767;&nbsp;</span></span>
+  <span class="ticker-item">Band 6 model answers<span class="ticker-mark">&nbsp;&#x2767;&nbsp;</span></span>
+  <span class="ticker-item">Written by top HSC graduates<span class="ticker-mark">&nbsp;&#x2767;&nbsp;</span></span>
+  <span class="ticker-item">Trusted across NSW<span class="ticker-mark">&nbsp;&#x2767;&nbsp;</span></span>
+  <span class="ticker-item">Harder than most school trials<span class="ticker-mark">&nbsp;&#x2767;&nbsp;</span></span>
+</div></div>
+
+<div id="trust">
+  <div class="trust-item"><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>NESA syllabus aligned</div>
+  <div class="trust-item"><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Same-day delivery</div>
+  <div class="trust-item"><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Marking guidelines</div>
+  <div class="trust-item"><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>100% original content</div>
+  <div class="trust-item"><svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>7-day refund policy</div>
+</div>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <div class="eyebrow"><span class="eyebrow-line"></span>Student reviews</div>
+  <div class="sec-title">Results speak louder<br><em>than promises.</em></div>
+  <p class="sec-sub">From students, parents, and tutors across New South Wales.</p>
+  <div class="reviews-track">
+    <div class="reviews-row reviews-row-1">
+      <div class="review-card"><span class="review-quote-mark">&ldquo;</span><div class="review-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="review-text">The worked solutions are genuinely better than anything my tutor gives me. I can see exactly how to build a Band 6 response, step by step.</p><div class="review-divider"></div><div class="review-author">Priya S.</div><div class="review-role">Year 12 &middot; English Advanced &middot; Sydney</div></div>
+      <div class="review-card"><span class="review-quote-mark">&ldquo;</span><div class="review-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="review-text">These are harder than my school's trial. After three Paper Perfect packs, the actual exam felt manageable. Worth every cent.</p><div class="review-divider"></div><div class="review-author">James T.</div><div class="review-role">Year 12 &middot; Mathematics Ext 1 &middot; Parramatta</div></div>
+      <div class="review-card"><span class="review-quote-mark">&ldquo;</span><div class="review-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="review-text">My daughter can self-mark and actually understand where she went wrong. The marking guidelines explain the thinking, not just the answer.</p><div class="review-divider"></div><div class="review-author">Lisa M.</div><div class="review-role">HSC Parent &middot; North Shore, Sydney</div></div>
+      <div class="review-card"><span class="review-quote-mark">&ldquo;</span><div class="review-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="review-text">I use Paper Perfect for every student I tutor. Quality is consistent and the solutions save me hours of prep every week.</p><div class="review-divider"></div><div class="review-author">Michael L.</div><div class="review-role">HSC Tutor &middot; 8 years experience</div></div>
+      <div class="review-card"><span class="review-quote-mark">&ldquo;</span><div class="review-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="review-text">Chemistry Module 6 was my weak spot. These papers showed me exactly which outcomes to fix. My trial result reflected it.</p><div class="review-divider"></div><div class="review-author">Anika R.</div><div class="review-role">Year 12 &middot; Chemistry &middot; Chatswood</div></div>
+    </div>
+    <div class="reviews-row reviews-row-2">
+      <div class="review-card"><span class="review-quote-mark">&ldquo;</span><div class="review-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="review-text">The full access pass was the best thing I bought all year. Five subjects, same quality throughout. Can't recommend it enough.</p><div class="review-divider"></div><div class="review-author">Ethan W.</div><div class="review-role">Year 12 &middot; Full access pass &middot; Wollongong</div></div>
+      <div class="review-card"><span class="review-quote-mark">&ldquo;</span><div class="review-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="review-text">Downloaded Saturday, sat the paper, marked it, had a clear study plan by Sunday. That's how prep should work.</p><div class="review-divider"></div><div class="review-author">Sophie K.</div><div class="review-role">Year 12 &middot; Physics &middot; Newcastle</div></div>
+      <div class="review-card"><span class="review-quote-mark">&ldquo;</span><div class="review-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="review-text">Our entire Year 12 cohort used Paper Perfect this term. The depth of the marking guidelines is outstanding and student feedback has been really positive.</p><div class="review-divider"></div><div class="review-author">Mr. D. Nguyen</div><div class="review-role">Head of Mathematics &middot; Sydney Grammar Prep</div></div>
+      <div class="review-card"><span class="review-quote-mark">&ldquo;</span><div class="review-stars"><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><p class="review-text">Went from barely passing internals to a 92 in the trial. These papers push you past what school sets — that gap is where the Band 6 lives.</p><div class="review-divider"></div><div class="review-author">Daniel H.</div><div class="review-role">Year 12 &middot; Biology &middot; Penrith</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBJECTS -->
+<section id="subjects">
+  <div class="eyebrow"><span class="eyebrow-line"></span>Subjects</div>
+  <div class="sec-title">Every major HSC subject,<br><em>covered.</em></div>
+  <p class="sec-sub">Papers written to real exam conditions. Full marking guidelines and Band 6 model answers included as standard.</p>
+  <div class="subjects-grid">
+    <div class="subject-card reveal">
+      <svg class="subject-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+      <span class="subject-abbr">Mathematics</span>
+      <div class="subject-name">Extension 1</div>
+      <div class="subject-meta">5 practice paper packs &middot; Year 11 &amp; 12</div>
+      <div class="subject-price">From $6.99</div>
+      <button class="get-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get this paper</button>
+    </div>
+    <div class="subject-card reveal">
+      <svg class="subject-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      <span class="subject-abbr">Mathematics</span>
+      <div class="subject-name">Extension 2</div>
+      <div class="subject-meta">4 practice paper packs &middot; Year 12</div>
+      <div class="subject-price">From $6.99</div>
+      <button class="get-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get this paper</button>
+    </div>
+    <div class="subject-card reveal">
+      <svg class="subject-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      <span class="subject-abbr">English</span>
+      <div class="subject-name">Advanced</div>
+      <div class="subject-meta">6 practice paper packs &middot; Year 11 &amp; 12</div>
+      <div class="subject-price">From $6.99</div>
+      <button class="get-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get this paper</button>
+    </div>
+    <div class="subject-card reveal">
+      <svg class="subject-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9C11.18 3.8 5.85 1.79 3.8 3.8c-2.04 2.04-.02 7.37 4.5 11.91s9.87 6.54 11.9 4.5z"/><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.91-2.03-2.04-7.36-.02-11.9 4.5S1.75 18.15 3.8 20.2c2.04 2.04 7.37.02 11.9-4.5z"/></svg>
+      <span class="subject-abbr">Science</span>
+      <div class="subject-name">Physics</div>
+      <div class="subject-meta">4 practice paper packs &middot; Year 12</div>
+      <div class="subject-price">From $6.99</div>
+      <button class="get-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get this paper</button>
+    </div>
+    <div class="subject-card reveal">
+      <svg class="subject-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
+      <span class="subject-abbr">Science</span>
+      <div class="subject-name">Chemistry</div>
+      <div class="subject-meta">4 practice paper packs &middot; Year 12</div>
+      <div class="subject-price">From $6.99</div>
+      <button class="get-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get this paper</button>
+    </div>
+    <div class="subject-card reveal">
+      <svg class="subject-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/><circle cx="12" cy="5" r="3"/><path d="M6.168 7.5a7 7 0 0 0 11.664 0"/></svg>
+      <span class="subject-abbr">Science</span>
+      <div class="subject-name">Biology</div>
+      <div class="subject-meta">4 practice paper packs &middot; Year 12</div>
+      <div class="subject-price">From $6.99</div>
+      <button class="get-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get this paper</button>
+    </div>
+    <div class="subject-card reveal">
+      <svg class="subject-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+      <span class="subject-abbr">Social Sciences</span>
+      <div class="subject-name">Economics</div>
+      <div class="subject-meta">3 practice paper packs &middot; Year 12</div>
+      <div class="subject-price">From $6.99</div>
+      <button class="get-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get this paper</button>
+    </div>
+    <div class="subject-card reveal" style="background:var(--sand-lt);">
+      <svg class="subject-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      <span class="subject-abbr">Coming soon</span>
+      <div class="subject-name">More subjects</div>
+      <div class="subject-meta">Business Studies &middot; Legal Studies &middot; PDHPE</div>
+      <div class="subject-price">Notify me &rarr;</div>
+      <button class="get-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get notified</button>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="eyebrow"><span class="eyebrow-line"></span>How it works</div>
+  <div class="sec-title">Ready to sit in<br><em>three steps.</em></div>
+  <p class="sec-sub">No complicated checkout. No waiting. Message us, get your PDF, start practising.</p>
+  <div class="how-grid">
+    <div class="how-step reveal">
+      <svg class="how-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <span class="how-num">01</span>
+      <div class="how-title">Pick your subject</div>
+      <p class="how-desc">Browse by subject or year level. Each pack includes full marking guidelines so you can see what examiners are actually looking for.</p>
+    </div>
+    <div class="how-step reveal">
+      <svg class="how-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <span class="how-num">02</span>
+      <div class="how-title">Message us directly</div>
+      <p class="how-desc">Reach out on WhatsApp, Instagram, or email. We'll confirm your order and send your PDF the same day. Yours to keep permanently.</p>
+    </div>
+    <div class="how-step reveal">
+      <svg class="how-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+      <span class="how-num">03</span>
+      <div class="how-title">Mark it, learn from it</div>
+      <p class="how-desc">Every paper includes worked solutions written to Band 6 standard. See how to structure your thinking under real exam conditions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="eyebrow"><span class="eyebrow-line"></span>Pricing</div>
+  <div class="sec-title">Simple, honest<br><em>pricing.</em></div>
+  <p class="sec-sub">No hidden fees. Pick exactly what you need, or save with a bundle. All orders go through us directly.</p>
+  <div class="pricing-grid">
+    <div class="pricing-card reveal">
+      <svg class="pricing-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <div class="pricing-name">1 Paper</div>
+      <div class="pricing-price">$6.99</div>
+      <div class="pricing-period">$6.99 per paper</div>
+      <p class="pricing-desc">Targeted practice on a specific topic. A good starting point before committing to a bundle.</p>
+      <ul class="feat-list">
+        <li class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>One complete practice exam</li>
+        <li class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Marking guidelines included</li>
+        <li class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Full worked solutions</li>
+        <li class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>PDF sent same day</li>
+      </ul>
+      <button class="p-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Order now</button>
+    </div>
+    <div class="pricing-card featured reveal">
+      <div class="pop-label">Most popular</div>
+      <svg class="pricing-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+      <div class="pricing-name">5 Papers</div>
+      <div class="pricing-price">$19.99</div>
+      <div class="pricing-period">$4.00 per paper</div>
+      <p class="pricing-desc">Five complete papers for one subject. Enough repetition to see real improvement across your weak areas.</p>
+      <ul class="feat-list">
+        <li class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>5 complete practice exams</li>
+        <li class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All marking guidelines</li>
+        <li class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All worked solutions</li>
+        <li class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Progress tracking checklist</li>
+      </ul>
+      <button class="p-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get bundle</button>
+    </div>
+    <div class="pricing-card reveal">
+      <div class="pop-label">Best Value ⭐</div>
+      <svg class="pricing-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div class="pricing-name">10 Papers</div>
+      <div class="pricing-price">$29.99</div>
+      <div class="pricing-period">$3.00 per paper</div>
+      <p class="pricing-desc">Ten complete papers across subjects. Maximum repetition and the best value per paper.</p>
+      <ul class="feat-list">
+        <li class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>10 complete practice exams</li>
+        <li class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All marking guidelines</li>
+        <li class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>All worked solutions</li>
+        <li class="feat-item"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>PDF sent same day</li>
+      </ul>
+      <button class="p-btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get best value</button>
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE SAMPLE QUESTIONS -->
+<section id="sample">
+  <div class="eyebrow"><span class="eyebrow-line"></span>Try it yourself</div>
+  <div class="sec-title">See the quality<br><em>for yourself.</em></div>
+  <p class="sec-sub">Real questions from our paper packs. Pick a subject and have a go — no sign-up needed.</p>
+
+  <div class="sample-tabs">
+    <button class="sample-tab active" onclick="switchTab(this,'tab-maths')">Maths Ext 1</button>
+    <button class="sample-tab" onclick="switchTab(this,'tab-english')">English Advanced</button>
+    <button class="sample-tab" onclick="switchTab(this,'tab-physics')">Physics</button>
+  </div>
+
+  <!-- MATHS TAB -->
+  <div id="tab-maths" class="sample-panel active">
+    <div class="sample-head">
+      <div>
+        <div class="sample-subject-name">Mathematics Extension 1</div>
+        <div class="sample-meta">Year 12 &nbsp;&middot;&nbsp; Section I &nbsp;&middot;&nbsp; Multiple choice</div>
+      </div>
+      <span class="marks-tag">1 mark</span>
+    </div>
+    <p class="sample-q"><strong>Question 3.</strong> A particle moves in a straight line with velocity v&nbsp;m/s, where v = sin(2t) and t is time in seconds. The particle is initially at the origin. What is the displacement of the particle at t = &pi;/2 seconds?</p>
+    <div class="mc-options" id="mc-maths">
+      <button class="mc-option" onclick="checkMC(this,'mc-maths',false,'The displacement requires integrating v. Remember displacement is the integral of velocity, not the velocity value at that time.')"><span class="mc-label">A</span> 0 m</button>
+      <button class="mc-option" onclick="checkMC(this,'mc-maths',true,'Correct. Displacement = &int;sin(2t)dt from 0 to &pi;/2 = [-cos(2t)/2] from 0 to &pi;/2 = (-cos(&pi;)/2) &minus; (-cos(0)/2) = 1/2 + 1/2 = 1 m.')"><span class="mc-label">B</span> 1 m</button>
+      <button class="mc-option" onclick="checkMC(this,'mc-maths',false,'Close, but check your integration. The coefficient when integrating sin(2t) introduces a factor of 1/2.')"><span class="mc-label">C</span> 2 m</button>
+      <button class="mc-option" onclick="checkMC(this,'mc-maths',false,'This would be the value of v at t = &pi;/2, not the displacement. Displacement requires integrating v over the interval.')"><span class="mc-label">D</span> &minus;1 m</button>
+    </div>
+    <div id="fb-mc-maths" class="feedback-box"></div>
+    <div style="margin-top:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);">
+      <div class="sample-head" style="padding-bottom:18px;margin-bottom:22px;">
+        <div>
+          <div class="sample-subject-name" style="font-size:18px;">Section II &mdash; Short answer</div>
+          <div class="sample-meta">Show all working &middot; 4 marks</div>
+        </div>
+        <span class="marks-tag">4 marks</span>
+      </div>
+      <p class="sample-q"><strong>Question 11(b).</strong> A particle moves in a straight line. Its velocity is given by v = 3t &minus; t&sup2; m/s, where t is time in seconds. Find the exact total distance travelled by the particle in the first 4 seconds.</p>
+      <div class="sample-answer-box" id="ans-maths">
+        <div class="sample-answer-lbl">Band 6 worked solution</div>
+        <div class="sample-blurred" id="blur-maths">
+          <p><strong>Step 1: Find when v = 0 to identify direction changes.</strong><br>3t &minus; t&sup2; = 0 &nbsp;&Rightarrow;&nbsp; t(3 &minus; t) = 0 &nbsp;&Rightarrow;&nbsp; t = 0 or t = 3.</p>
+          <p><strong>Step 2: Determine direction.</strong><br>v &gt; 0 for 0 &lt; t &lt; 3 (moving in positive direction), v &lt; 0 for 3 &lt; t &lt; 4 (moving in negative direction).</p>
+          <p><strong>Step 3: Integrate each interval separately.</strong><br>&int;&nbsp;(3t &minus; t&sup2;) dt from 0 to 3 = [3t&sup2;/2 &minus; t&sup3;/3] from 0 to 3 = 27/2 &minus; 9 = 9/2<br>&int;&nbsp;(3t &minus; t&sup2;) dt from 3 to 4 = [3t&sup2;/2 &minus; t&sup3;/3] from 3 to 4 = (24 &minus; 64/3) &minus; (27/2 &minus; 9) = &minus;7/6</p>
+          <p><strong>Step 4: Total distance = sum of absolute values.</strong><br>Total distance = |9/2| + |&minus;7/6| = 9/2 + 7/6 = 27/6 + 7/6 = <strong>34/6 = 17/3 metres</strong></p>
+        </div>
+      </div>
+      <div class="sample-reveal-row">
+        <button class="btn-reveal" id="rev-maths" onclick="revealAnswer('blur-maths','ans-maths','rev-maths')">Show worked solution</button>
+        <div class="sample-lock-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Full papers include every step, mark allocation, and common errors to avoid.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENGLISH TAB -->
+  <div id="tab-english" class="sample-panel">
+    <div class="sample-head">
+      <div>
+        <div class="sample-subject-name">English Advanced</div>
+        <div class="sample-meta">Year 12 &nbsp;&middot;&nbsp; Section III &nbsp;&middot;&nbsp; Extended response</div>
+      </div>
+      <span class="marks-tag">15 marks</span>
+    </div>
+    <p class="sample-q"><strong>Question 3.</strong> "Prescribed texts force us to question the values we take for granted." To what extent does your study of your prescribed text support this view? In your response, refer to your prescribed text and at least ONE other related text of your own choosing.</p>
+    <div class="sample-answer-box" id="ans-english">
+      <div class="sample-answer-lbl">What a Band 6 response does</div>
+      <div class="sample-blurred" id="blur-english">
+        <p><strong>Thesis:</strong> A Band 6 response opens with a clear, contestable thesis that directly addresses the question's claim, not just the topic. It names the text and immediately positions how the text either supports, complicates, or qualifies the statement.</p>
+        <p><strong>Body paragraphs:</strong> Each paragraph centres on a specific value being interrogated. The analysis moves from technique to effect to thematic significance — not the other way around. Quotes are short, precise, and embedded into the student's own syntax. The related text is woven in as a counterpoint or extension, not bolted on at the end.</p>
+        <p><strong>Evaluation:</strong> The phrase "to what extent" is answered explicitly. Band 6 students acknowledge where the text confirms the statement and where it pushes back — showing they have genuinely wrestled with the question rather than restated a prepared argument.</p>
+        <p><strong>Conclusion:</strong> Synthesises the argument rather than summarising. Leaves the marker with a residual idea that could not have been written without reading the text carefully.</p>
+      </div>
+    </div>
+    <div class="sample-reveal-row">
+      <button class="btn-reveal" id="rev-english" onclick="revealAnswer('blur-english','ans-english','rev-english')">Show Band 6 breakdown</button>
+      <div class="sample-lock-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Full papers include a complete Band 6 model essay, marking criteria, and annotated breakdown.</div>
+    </div>
+  </div>
+
+  <!-- PHYSICS TAB -->
+  <div id="tab-physics" class="sample-panel">
+    <div class="sample-head">
+      <div>
+        <div class="sample-subject-name">Physics</div>
+        <div class="sample-meta">Year 12 &nbsp;&middot;&nbsp; Section I &nbsp;&middot;&nbsp; Multiple choice</div>
+      </div>
+      <span class="marks-tag">1 mark</span>
+    </div>
+    <p class="sample-q"><strong>Question 7.</strong> An electron moves with velocity v perpendicular to a uniform magnetic field of strength B. Which of the following correctly describes the effect of doubling the magnetic field strength while keeping all other variables constant?</p>
+    <div class="mc-options" id="mc-physics">
+      <button class="mc-option" onclick="checkMC(this,'mc-physics',false,'The radius of circular motion r = mv/qB. Doubling B halves r, so the radius decreases rather than stays the same.')"><span class="mc-label">A</span> The radius of circular motion remains unchanged</button>
+      <button class="mc-option" onclick="checkMC(this,'mc-physics',false,'The speed is unchanged — the magnetic force does no work on the electron. The path changes, not the speed.')"><span class="mc-label">B</span> The speed of the electron doubles</button>
+      <button class="mc-option" onclick="checkMC(this,'mc-physics',true,'Correct. r = mv/qB. Doubling B halves the radius. The magnetic force is always perpendicular to velocity, so it does no work and the speed remains constant.')"><span class="mc-label">C</span> The radius of circular motion is halved</button>
+      <button class="mc-option" onclick="checkMC(this,'mc-physics',false,'The magnetic force is always perpendicular to the velocity vector, so it does no work and cannot change the electron\'s kinetic energy or speed.')"><span class="mc-label">D</span> The kinetic energy of the electron doubles</button>
+    </div>
+    <div id="fb-mc-physics" class="feedback-box"></div>
+    <div style="margin-top:28px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.06);">
+      <div class="sample-head" style="padding-bottom:18px;margin-bottom:22px;">
+        <div>
+          <div class="sample-subject-name" style="font-size:18px;">Section II &mdash; Short answer</div>
+          <div class="sample-meta">Show all working &middot; 5 marks</div>
+        </div>
+        <span class="marks-tag">5 marks</span>
+      </div>
+      <p class="sample-q"><strong>Question 26(b).</strong> A 2.0 kg projectile is launched at 30 m/s at an angle of 40&deg; above the horizontal. Ignoring air resistance, calculate the maximum height reached and the total horizontal range of the projectile. (g = 9.8 m/s&sup2;)</p>
+      <div class="sample-answer-box" id="ans-physics">
+        <div class="sample-answer-lbl">Band 6 worked solution</div>
+        <div class="sample-blurred" id="blur-physics">
+          <p><strong>Step 1: Resolve initial velocity into components.</strong><br>u&nbsp;= 30 m/s &nbsp;&middot;&nbsp; &theta; = 40&deg;<br>u&#x2093; = 30 cos 40&deg; = 22.98 m/s &nbsp;&nbsp; u&#x1D67; = 30 sin 40&deg; = 19.28 m/s</p>
+          <p><strong>Step 2: Maximum height (v&#x1D67; = 0 at max height).</strong><br>v&#x1D67;&sup2; = u&#x1D67;&sup2; &minus; 2gH &nbsp;&Rightarrow;&nbsp; 0 = (19.28)&sup2; &minus; 2(9.8)H<br>H = (19.28)&sup2; / (2 &times; 9.8) = 371.7 / 19.6 = <strong>18.97 m &asymp; 19.0 m</strong></p>
+          <p><strong>Step 3: Time of flight.</strong><br>Total time T = 2u&#x1D67;/g = 2(19.28)/9.8 = <strong>3.94 s</strong></p>
+          <p><strong>Step 4: Horizontal range.</strong><br>R = u&#x2093; &times; T = 22.98 &times; 3.94 = <strong>90.5 m</strong></p>
+          <p><em>Note: mass (2.0 kg) is irrelevant data — a deliberate test of whether students can identify what information is needed.</em></p>
+        </div>
+      </div>
+      <div class="sample-reveal-row">
+        <button class="btn-reveal" id="rev-physics" onclick="revealAnswer('blur-physics','ans-physics','rev-physics')">Show worked solution</button>
+        <div class="sample-lock-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Full papers include every step, mark allocation, and examiner notes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="eyebrow"><span class="eyebrow-line"></span>About Paper Perfect</div>
+  <div class="sec-title">Exam-standard materials,<br><em>rigorously crafted.</em></div>
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="about-block">
+        <h3>Our quality standard</h3>
+        <p>Every Paper Perfect practice paper is written to match or exceed the rigour of official HSC examinations. Questions align to current NESA syllabus outcomes. Worked solutions are crafted to Band 6 standard so students understand not just the answer, but how to communicate it clearly under timed conditions.</p>
+      </div>
+      <div class="about-block">
+        <h3>Why practice papers matter</h3>
+        <p>Consistent exam practice under realistic conditions is the most effective preparation strategy for the HSC. Our papers give students that repetition at a difficulty level that reveals exactly where improvement is needed, backed by solutions that teach rather than merely correct.</p>
+      </div>
+      <div class="about-block">
+        <h3>Original work, always</h3>
+        <p>All Paper Perfect materials are entirely original. We do not reproduce, adapt, or derive content from NESA official past papers. Our materials are fully compliant with Australian copyright law.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STUDY HUB / BLOG -->
+<section id="blog">
+  <div class="eyebrow"><span class="eyebrow-line"></span>Study Hub</div>
+  <div class="sec-title">Free resources for<br><em>HSC students.</em></div>
+  <p class="sec-sub">Practical guides, study strategies, and subject breakdowns published throughout the HSC year — at no charge.</p>
+  <div class="blog-grid">
+    <div class="blog-card reveal">
+      <svg class="blog-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+      <span class="blog-tag">Study strategy</span>
+      <div class="blog-title">How to self-mark your own HSC practice papers properly</div>
+      <div class="blog-meta">5 min read</div>
+      <button class="blog-expand-btn" onclick="toggleBlog(this)">Read more +</button>
+      <div class="blog-expanded">
+        <p>Most students complete a practice paper, glance at the answers, and move on. That approach wastes most of the value. Self-marking is where the learning actually happens.</p>
+        <p>Start by marking cold — without looking at the solutions first. Work out each problem yourself, note where you got stuck, then compare your reasoning to the worked solution. The gap between your method and the model answer is the gap between your current band and the one above.</p>
+        <p>For extended response questions, mark against the criteria rather than against the model essay. Ask yourself which criterion you failed to address, and rewrite that section. One targeted rewrite is worth three fresh attempts at a new question.</p>
+      </div>
+    </div>
+    <div class="blog-card reveal">
+      <svg class="blog-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+      <span class="blog-tag">Mathematics</span>
+      <div class="blog-title">The ten most common errors in Maths Ext 1</div>
+      <div class="blog-meta">7 min read</div>
+      <button class="blog-expand-btn" onclick="toggleBlog(this)">Read more +</button>
+      <div class="blog-expanded">
+        <p>After reviewing hundreds of student papers, ten errors appear over and over. The biggest: forgetting to check for direction changes when calculating distance (not displacement). Many students integrate velocity over the full interval and lose two marks for what is essentially a one-step oversight.</p>
+        <p>Second most common: inverse trig domain errors. When evaluating sin&sup2;&#x207B;&#xB9;(x), students often ignore the restricted domain and lose a mark for extraneous solutions. Write the domain at the top of every inverse trig question before doing any working.</p>
+        <p>The fix for most of these errors is not more practice — it is slowing down on the final check. Leave five minutes at the end specifically to re-read your working for the question you found hardest.</p>
+      </div>
+    </div>
+    <div class="blog-card reveal">
+      <svg class="blog-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/><line x1="17.5" y1="15" x2="9" y2="15"/></svg>
+      <span class="blog-tag">English</span>
+      <div class="blog-title">How to write a Band 6 essay under timed conditions</div>
+      <div class="blog-meta">8 min read</div>
+      <button class="blog-expand-btn" onclick="toggleBlog(this)">Read more +</button>
+      <div class="blog-expanded">
+        <p>The biggest misconception about Band 6 English essays is that they require long, elaborate sentences. They don't. They require precise ones. Markers read 200 responses per day. They notice when a student is writing to fill space versus writing to make a point.</p>
+        <p>Plan for six minutes, no matter how time-pressured you feel. Students who plan write more fluently, not less. A clear three-part thesis written in your plan becomes the backbone of every paragraph, and every paragraph becomes easier to write when you know exactly which part of the thesis you're developing.</p>
+        <p>The phrase "to what extent" in a question is an invitation to acknowledge complexity. Name a tension in the text. Show the marker you've actually thought about it rather than restated a prepared argument in a new costume.</p>
+      </div>
+    </div>
+    <div class="blog-card reveal">
+      <svg class="blog-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      <span class="blog-tag">Planning</span>
+      <div class="blog-title">An eight-week HSC trial study schedule that actually works</div>
+      <div class="blog-meta">6 min read</div>
+      <button class="blog-expand-btn" onclick="toggleBlog(this)">Read more +</button>
+      <div class="blog-expanded">
+        <p>Eight weeks before trials, most students try to study everything at once. That's the wrong approach. Weeks one and two should be diagnostic: sit one practice paper per subject and mark it honestly. The results tell you exactly where to put your next six weeks.</p>
+        <p>Weeks three through six focus on the weakest two subjects. One full paper per subject per week, with a full marking session the next morning when the experience is still fresh. Don't move to a new paper until you've marked and re-attempted every question you got wrong.</p>
+        <p>Weeks seven and eight are consolidation. Rotate back through your stronger subjects to prevent drift, and do timed sessions under real exam conditions: no phone, no notes, strict time limits. That discomfort in practice is what makes the actual exam feel manageable.</p>
+      </div>
+    </div>
+    <div class="blog-card reveal">
+      <svg class="blog-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9C11.18 3.8 5.85 1.79 3.8 3.8c-2.04 2.04-.02 7.37 4.5 11.91s9.87 6.54 11.9 4.5z"/><path d="M15.7 15.7c4.52-4.54 6.54-9.87 4.5-11.91-2.03-2.04-7.36-.02-11.9 4.5S1.75 18.15 3.8 20.2c2.04 2.04 7.37.02 11.9-4.5z"/></svg>
+      <span class="blog-tag">Science</span>
+      <div class="blog-title">Physics Modules 5 to 8: the highest-yield topics to tackle first</div>
+      <div class="blog-meta">5 min read</div>
+      <button class="blog-expand-btn" onclick="toggleBlog(this)">Read more +</button>
+      <div class="blog-expanded">
+        <p>Module 5 (Advanced Mechanics) and Module 6 (Electromagnetism) consistently carry the most marks in HSC Physics papers and offer the clearest path to full marks if you know the derivations cold. Don't just memorise formulae — understand where they come from, because multi-step problems will test that understanding directly.</p>
+        <p>Module 7 (The Nature of Light) is frequently underestimated. The Maxwell equations and the Michelson-Morley experiment appear almost every year. Students who understand the conceptual story — not just the numbers — pick up marks that others leave on the table.</p>
+        <p>Module 8 (From the Universe to the Atom) rewards students who can explain the significance of experimental evidence, not just state what it showed. Phrase your answers in terms of what each experiment confirmed or rejected, and you'll consistently be in the top band.</p>
+      </div>
+    </div>
+    <div class="blog-card reveal">
+      <svg class="blog-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span class="blog-tag">Parents</span>
+      <div class="blog-title">How to support your Year 12 student without adding to the pressure</div>
+      <div class="blog-meta">4 min read</div>
+      <button class="blog-expand-btn" onclick="toggleBlog(this)">Read more +</button>
+      <div class="blog-expanded">
+        <p>The most useful thing most parents can do during HSC is reduce friction. That means meals on time, a quiet space to work, and not asking "how's study going?" every evening. Students under exam pressure don't need more questions — they need fewer decisions to make about everything that isn't study.</p>
+        <p>If you want to be actively helpful, ask what subject they're working on and whether there's anything specific they're stuck on. That's a question they can answer usefully, and it signals interest without pressure.</p>
+        <p>The ATAR is one number from one period of their life. Say that out loud to them. Students who know their family's love is not conditional on a score perform better, not worse — because they're not burning cognitive resources managing anxiety about disappointing you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div id="cta-banner">
+  <div class="cta-title">Your Band 6 starts<br><em>here.</em></div>
+  <p class="cta-sub">Join students across NSW who prep with the most rigorous practice papers available.</p>
+  <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get your paper today</button>
+</div>
+
+<!-- CONTACT / REACH OUT -->
+<section id="contact">
+  <div class="eyebrow"><span class="eyebrow-line"></span>Get in touch</div>
+  <div class="sec-title">Ready to start?<br><em>Message us.</em></div>
+  <p class="sec-sub">Tell us which subject and pack you want, and we'll send your PDF the same day. Usually within a couple of hours.</p>
+  <div class="contact-grid">
+    <a href="https://wa.me/61468785842" target="_blank" class="contact-card whatsapp">
+      <div class="contact-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.556 4.118 1.526 5.845L.057 23.817a.75.75 0 0 0 .925.925l5.972-1.47A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.707 9.707 0 0 1-4.975-1.364l-.356-.213-3.695.909.927-3.591-.234-.371A9.712 9.712 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+      </div>
+      <div class="contact-body">
+        <div class="contact-platform">WhatsApp</div>
+        <div class="contact-handle">+61 468 785 842</div>
+        <div class="contact-cta-text">Fastest response. Usually reply within the hour.</div>
+      </div>
+      <div class="contact-arrow">&#8594;</div>
+    </a>
+    <a href="https://instagram.com/paperperfect.hsc" target="_blank" class="contact-card instagram">
+      <div class="contact-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </div>
+      <div class="contact-body">
+        <div class="contact-platform">Instagram</div>
+        <div class="contact-handle">@paperperfect.hsc</div>
+        <div class="contact-cta-text">DM us directly. We respond to every message.</div>
+      </div>
+      <div class="contact-arrow">&#8594;</div>
+    </a>
+    <a href="mailto:aspiretutoring2@gmail.com" class="contact-card email">
+      <div class="contact-icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div class="contact-body">
+        <div class="contact-platform">Email</div>
+        <div class="contact-handle">aspiretutoring2@gmail.com</div>
+        <div class="contact-cta-text">Prefer email? We reply within 24 hours.</div>
+      </div>
+      <div class="contact-arrow">&#8594;</div>
+    </a>
+  </div>
+  <p class="contact-note">All enquiries are answered personally. We typically respond to WhatsApp messages within the hour during business hours.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Paper<em>Perfect</em></div>
+      <p class="footer-tagline">HSC practice exams written to NESA standards. Every paper includes marking guidelines and Band 6 worked solutions, sent same day.</p>
+    </div>
+    <div class="footer-col"><h4>Subjects</h4><a href="#subjects">Mathematics Ext 1</a><a href="#subjects">Mathematics Ext 2</a><a href="#subjects">English Advanced</a><a href="#subjects">Physics</a><a href="#subjects">Chemistry</a><a href="#subjects">Biology</a><a href="#subjects">Economics</a></div>
+    <div class="footer-col"><h4>Pages</h4><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#about">About us</a><a href="#blog">Study Hub</a><a href="#contact">Contact</a></div>
+    <div class="footer-col"><h4>Legal</h4><a href="#">Terms of use</a><a href="#">Privacy policy</a><a href="#">Refund policy</a><a href="#">Copyright notice</a></div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2025 Paper Perfect. All rights reserved.</span>
+    <span>Original practice papers. Not affiliated with or endorsed by NESA.</span>
+  </div>
+</footer>
+
+<!-- FLOATING CONTACT WIDGET -->
+<button class="float-contact-btn" id="floatBtn" onclick="toggleFloatPanel()" aria-label="Contact us">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+<div class="float-contact-panel" id="floatPanel">
+  <div class="float-panel-title">Get in touch</div>
+  <div class="float-panel-sub">We reply same day. Message us directly.</div>
+  <div class="float-panel-links">
+    <a href="https://wa.me/61468785842" target="_blank" class="float-panel-link wa">
+      <svg class="float-link-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.556 4.118 1.526 5.845L.057 23.817a.75.75 0 0 0 .925.925l5.972-1.47A11.946 11.946 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.707 9.707 0 0 1-4.975-1.364l-.356-.213-3.695.909.927-3.591-.234-.371A9.712 9.712 0 0 1 2.25 12C2.25 6.615 6.615 2.25 12 2.25S21.75 6.615 21.75 12 17.385 21.75 12 21.75z"/></svg>
+      <span class="float-link-text">+61 468 785 842</span>
+    </a>
+    <a href="https://instagram.com/paperperfect.hsc" target="_blank" class="float-panel-link ig">
+      <svg class="float-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      <span class="float-link-text">@paperperfect.hsc</span>
+    </a>
+    <a href="mailto:aspiretutoring2@gmail.com" class="float-panel-link em">
+      <svg class="float-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span class="float-link-text">aspiretutoring2@gmail.com</span>
+    </a>
+  </div>
+</div>
+
+<script>
+/* CURSOR */
+const cur=document.getElementById('cur'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function animRing(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);})();
+document.querySelectorAll('button,a,.subject-card,.blog-card,.review-card,.pricing-card,.founder-card,.mc-option,.float-panel-link,.float-contact-btn').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2.5)';cur.style.background='var(--sand)';ring.style.opacity='0.18';ring.style.transform='translate(-50%,-50%) scale(1.7)';});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';cur.style.background='var(--taupe)';ring.style.opacity='0.4';ring.style.transform='translate(-50%,-50%) scale(1)';});
+});
+
+/* SCROLL REVEAL */
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*90);obs.unobserve(e.target);}});
+},{threshold:0.08,rootMargin:'0px 0px -36px 0px'});
+document.querySelectorAll('.reveal').forEach(r=>obs.observe(r));
+
+/* NAV */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').style.background=window.scrollY>50?'rgba(250,246,240,0.97)':'rgba(250,246,240,0.88)';
+});
+
+/* SAMPLE TABS */
+function switchTab(btn, panelId){
+  document.querySelectorAll('.sample-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.sample-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+}
+
+/* MULTIPLE CHOICE */
+function checkMC(btn, groupId, isCorrect, explanation){
+  const group = document.getElementById(groupId);
+  if(group.dataset.answered) return;
+  group.dataset.answered = '1';
+  const allOpts = group.querySelectorAll('.mc-option');
+  allOpts.forEach(o => o.style.pointerEvents = 'none');
+  btn.classList.add(isCorrect ? 'correct' : 'wrong');
+  if(!isCorrect){
+    // highlight correct answer
+    allOpts.forEach(o => {
+      if(o.getAttribute('onclick') && o.getAttribute('onclick').includes('true')) o.classList.add('correct');
+    });
+  }
+  const suffix = groupId.replace('mc-','');
+  const fb = document.getElementById('fb-mc-'+suffix);
+  if(fb){
+    fb.className = 'feedback-box show ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
+    fb.innerHTML = (isCorrect ? '<strong>Correct.</strong> ' : '<strong>Not quite.</strong> ') + explanation;
+  }
+}
+
+/* REVEAL ANSWER */
+function revealAnswer(blurId, boxId, btnId){
+  const blurEl = document.getElementById(blurId);
+  const boxEl  = document.getElementById(boxId);
+  const btnEl  = document.getElementById(btnId);
+  blurEl.classList.remove('sample-blurred');
+  boxEl.classList.add('revealed');
+  btnEl.textContent = 'Solution shown';
+  btnEl.classList.add('shown');
+  btnEl.disabled = true;
+}
+
+/* BLOG EXPAND */
+function toggleBlog(btn){
+  const card = btn.closest('.blog-card');
+  const isOpen = card.classList.toggle('open');
+  btn.textContent = isOpen ? 'Show less \u2212' : 'Read more +';
+}
+
+/* FLOAT PANEL */
+function toggleFloatPanel(){
+  const panel = document.getElementById('floatPanel');
+  const btn = document.getElementById('floatBtn');
+  const isOpen = panel.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+}
+// Close panel when clicking outside
+document.addEventListener('click', function(e){
+  const panel = document.getElementById('floatPanel');
+  const btn = document.getElementById('floatBtn');
+  if(!panel.contains(e.target) && !btn.contains(e.target)){
+    panel.classList.remove('open');
+    btn.classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>
